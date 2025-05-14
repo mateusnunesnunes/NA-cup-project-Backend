@@ -1,0 +1,31 @@
+{
+  "name": "na-cup-project-backend",
+  "version": "1.0.0",
+  "description": "This project was made by Mateus Nunes And Leonardo Cleyton.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mateusnunesnunes/NA-cup-project-Backend.git"
+  },
+  "author": "Mateus Nunes and Leonaro Cleyton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mateusnunesnunes/NA-cup-project-Backend/issues"
+  },
+  "homepage": "https://github.com/mateusnunesnunes/NA-cup-project-Backend#readme",
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.7.0"
+  }
+}
