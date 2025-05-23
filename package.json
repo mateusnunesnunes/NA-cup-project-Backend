@@ -4,9 +4,8 @@
   "description": "This project was made by Mateus Nunes And Leonardo Cleyton.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js",
-    "dev": "nodemon src/index.js"
+    "start:prod": "cross-env NODE_ENV=prod nodemon src/index.js",
+    "start:dev": "cross-env NODE_ENV=dev nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -22,8 +21,10 @@
     "@prisma/client": "^6.7.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.10",
     "prisma": "^6.7.0"
