@@ -1,9 +1,7 @@
 # Node
 node_modules/
 dist/
-.env
-.env.dev
-.env.prod
+.env*
 
 # Prisma
 .prisma/
