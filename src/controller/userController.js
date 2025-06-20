@@ -80,3 +80,62 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: 'Erro ao deletar usuário.' });
   }
 };
+
+// GET /users/:id/albums – lista álbuns de um usuário
+exports.getUserAlbums = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    console.log("Buscando álbuns do usuário:", id);
+
+    const userWithAlbums = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        albums: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            image: true,
+            createdAt: true,
+            isMain: true,
+            albumItems: {
+              select: {
+                owned: true,
+                sticker: {
+                  select: {
+                    id: true,
+                    number: true,
+                    name: true,
+                    country: true,
+                    player: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!userWithAlbums) {
+      return res.status(404).json({ error: 'Usuário não encontrado.' });
+    }
+
+    // Transformar albumItems em stickers diretamente no retorno
+    const albumsWithStickers = userWithAlbums.albums.map(album => ({
+      ...album,
+      stickers: album.albumItems.map(item => ({
+        ...item.sticker,
+        owned: item.owned
+      }))
+    }));
+
+    res.json(albumsWithStickers);
+
+  } catch (error) {
+    console.error('Erro ao buscar álbuns do usuário:', error);
+    res.status(500).json({ error: 'Erro ao obter álbuns.' });
+  }
+};
+
+

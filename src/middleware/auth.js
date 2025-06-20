@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 
 function authenticateToken(req, res, next) {
 
-   if (process.env.NODE_ENV == "prod") {
+   if (process.env.NODE_ENV == "dev") {
     // Em desenvolvimento, pula a autenticação
+    
     return next();
   }
 

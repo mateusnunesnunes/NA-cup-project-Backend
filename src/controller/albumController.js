@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 exports.getAllAlbums = async (req, res) => {
   try {
     const albums = await prisma.album.findMany({
-      include: { stickers: true }  // inclui figurinhas relacionadas, se existir relação
+      include: { albumItems: true }  // inclui figurinhas relacionadas, se existir relação
     });
     console.log(albums);
     res.json(albums);
@@ -21,9 +21,15 @@ exports.getAlbumById = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const album = await prisma.album.findUnique({
-      where: { id },
-      include: { stickers: true }
-    });
+    where: { id: Number(req.params.id) },
+    include: {
+      albumItems: {
+        include: {
+          sticker: true
+        }
+      }
+    }
+  });
     if (!album) {
       return res.status(404).json({ error: 'Álbum não encontrado.' });
     }

@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://root:admin25@localhost:3306/copa2026" // sua string de conexão .env
 }
 
 model User {
@@ -24,16 +24,26 @@ model Album {
   isMain      Boolean   @default(false)
   userId      Int
   user        User      @relation(fields: [userId], references: [id])
-  stickers    Sticker[]
+  albumItems  AlbumSticker[]
 }
 
 model Sticker {
-  id        Int      @id @default(autoincrement())
-  number    Int
-  name      String   
-  country   String
-  player    String
-  owned     Boolean  @default(false)
-  albumId   Int
-  album     Album    @relation(fields: [albumId], references: [id])
+  id       Int      @id @default(autoincrement())
+  number   Int
+  name     String
+  country  String
+  player   String
+  albums   AlbumSticker[]
+}
+
+model AlbumSticker {
+  id         Int      @id @default(autoincrement())
+  albumId    Int
+  stickerId  Int
+  owned      Boolean  @default(false)
+
+  album      Album    @relation(fields: [albumId], references: [id])
+  sticker    Sticker  @relation(fields: [stickerId], references: [id])
+
+  @@unique([albumId, stickerId])
 }

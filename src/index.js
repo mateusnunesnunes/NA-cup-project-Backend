@@ -25,7 +25,6 @@ app.use(express.json());
 app.use('/albums',authenticateToken, albumRoutes);
 app.use('/users',authenticateToken, userRoutes);
 app.use('/login',loginLimiter, authRoutes);
-
 app.get('/perfil', authenticateToken, (req, res) => {
   res.json({ message: 'Você está autenticado!', user: req.user });
 });
@@ -36,7 +35,7 @@ app.use('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor rodando na porta ${PORT}`);
   console.log(`Usando ${process.env.NODE_ENV}`);
   console.log(`Usando ${process.env.JWT_SECRET}`);
