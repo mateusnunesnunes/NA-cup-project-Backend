@@ -20,4 +20,8 @@ router.put('/:id', albumController.updateAlbum);
 // Rota para deletar um álbum
 router.delete('/:id', albumController.deleteAlbum);
 
+//Rota para atualizar o owned do sticker
+router.patch('/:albumId/stickers/:stickerId', albumController.updateStickerOwnership);
+
+
 module.exports = router;

@@ -18,6 +18,7 @@ exports.getAllAlbums = async (req, res) => {
 
 // GET /albums/:id – retorna um álbum por ID
 exports.getAlbumById = async (req, res) => {
+  console.log("GET /albums/:id ")
   try {
     const id = parseInt(req.params.id);
     const album = await prisma.album.findUnique({
@@ -86,5 +87,35 @@ exports.deleteAlbum = async (req, res) => {
       return res.status(404).json({ error: 'Álbum não encontrado.' });
     }
     res.status(500).json({ error: 'Erro ao deletar o álbum.' });
+  }
+};
+
+// PATCH /albums/:albumId/stickers/:stickerId – atualiza se a figurinha está possuída
+exports.updateStickerOwnership = async (req, res) => {
+  const albumId = parseInt(req.params.albumId);
+  const stickerId = parseInt(req.params.stickerId);
+  const { owned } = req.body;
+
+  try {
+    const updated = await prisma.albumSticker.update({
+      where: {
+        albumId_stickerId: {
+          albumId,
+          stickerId
+        }
+      },
+      data: { owned }
+    });
+
+    res.json(updated);
+  } catch (error) {
+    console.error(error);
+
+    // Trata caso a combinação (albumId, stickerId) não exista
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'Relação álbum-figurinha não encontrada.' });
+    }
+
+    res.status(500).json({ error: 'Erro ao atualizar figurinha.' });
   }
 };

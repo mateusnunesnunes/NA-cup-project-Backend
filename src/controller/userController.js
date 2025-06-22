@@ -83,6 +83,7 @@ exports.deleteUser = async (req, res) => {
 
 // GET /users/:id/albums – lista álbuns de um usuário
 exports.getUserAlbums = async (req, res) => {
+  console.log("pegando album")
   try {
     const id = parseInt(req.params.id);
     console.log("Buscando álbuns do usuário:", id);
